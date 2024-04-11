@@ -1,0 +1,54 @@
+services:
+  mysqldb:
+    image: mysql:8.0
+    container_name: mysqlcontainer
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/0_init.sql
+      - dbdata:/var/lib/mysql
+    expose:
+      - 3306
+    environment:
+      MYSQL_DATABASE: universidad
+      MYSQL_USER: christian
+      MYSQL_PASSWORD: 123
+      MYSQL_ROOT_PASSWORD: 123
+      SERVICE_TAGS: prod
+      SERVICE_NAME: mysqldb
+    networks:
+      - internalnet
+
+  api:
+    container_name: nodeapi
+    build: .
+    image: api:v1
+    volumes:
+      - $HOME/api:/code
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+    environment:
+      DB_HOST: mysqldb 
+      DB_PORT: 3306
+      DB_USER: 'admin'
+      DB_PASSWORD: 'letmein'
+      DB_NAME: universidad
+      DB_CONNECTION_LIMIT: 20
+      SERVICE_TAGS: prod
+      SERVICE_NAME: apiservice
+      SERVER_PORT: 3000
+    depends_on:
+      - mysqldb
+    networks:
+      - internalnet
+
+volumes:
+  dbdata:
+
+networks:
+  internalnet:
+    driver: bridge
