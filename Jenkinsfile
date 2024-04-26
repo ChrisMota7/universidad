@@ -16,7 +16,14 @@ pipeline {
                 }
             }
         }
-        
+
+        stage('Ejecutar Docker Compose') {
+            steps {
+                bat "docker-compose up -d"
+            }
+        }
+
+
         stage('Limpiar') {
             steps {
                 sh 'docker-compose down'
