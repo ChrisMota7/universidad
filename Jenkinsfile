@@ -26,8 +26,10 @@ pipeline {
 
         stage('Limpiar') {
             steps {
-                bat 'docker-compose down'
+                bat 'docker-compose down || true'
             }
+        }
+
         }
     }
 }
