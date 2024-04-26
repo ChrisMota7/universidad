@@ -4,14 +4,15 @@ pipeline {
     stages {
         stage('Clonar Repositorio') {
             steps {
-                git url: 'https://github.com/ChrisMota7/universidad.git'
+                git branch: 'main',
+                    url: 'https://github.com/ChrisMota7/universidad.git'
             }
         }
         
         stage('Construir Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build('u-api/${BUILD_NUMBER}')
+                    dockerImage = docker.build("u-api/${env.BUILD_NUMBER}")
                 }
             }
         }
@@ -29,3 +30,4 @@ pipeline {
         }
     }
 }
+
