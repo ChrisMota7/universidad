@@ -26,7 +26,7 @@ pipeline {
 
         stage('Limpiar') {
             steps {
-                sh 'docker-compose down'
+                bat 'docker-compose down'
             }
         }
     }
