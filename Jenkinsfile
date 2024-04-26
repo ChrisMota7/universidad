@@ -16,13 +16,7 @@ pipeline {
                 }
             }
         }
-
-        stage('Ejecutar Docker Compose') {
-            steps {
-                sh 'docker-compose -f docker-compose.yml up -d'
-            }
-        }
-
+        
         stage('Limpiar') {
             steps {
                 sh 'docker-compose down'
