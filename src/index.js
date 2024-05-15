@@ -18,6 +18,6 @@ app.use(express.json());
 app.use('/api', require('./routes/university'));
 
 app.listen(app.get('port'), () => {
-    console.log(Server running on port ${app.get('port')});
+    console.log(`Server running on port ${app.get('port')}`);
     console.log(process.env.MYSQLDB_NAME);
 })
